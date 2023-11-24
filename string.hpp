@@ -1,6 +1,7 @@
 #pragma once
 #include "resource.hpp"
 #include <vector>
+#include <iostream>
 
 
 class string
@@ -64,14 +65,13 @@ public:
 	string& operator =(const string&);
 	string& operator =(string&&) noexcept;
 
-	operator char* ();
 	operator const char* () const;
 	operator bool() const;
 
 	string operator +(const string) const;
 	string operator *(const size_t) const;
-	string& operator +=(const string);
-	string& operator *=(const size_t);
+	string operator +=(const string);
+	string operator *=(const size_t);
 
 	bool operator ==(std::nullptr_t) const;
 	bool operator ==(const string) const;
@@ -99,4 +99,8 @@ public:
 
 	~string();
 };
+
+
+std::ostream& operator <<(std::ostream&, const string);
+std::istream& operator >>(std::istream&, string&);
 

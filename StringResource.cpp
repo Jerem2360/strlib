@@ -49,6 +49,10 @@ size_t StringResource::getRefCnt() {
 	return this->refcnt;
 }
 
+const char* StringResource::buffer() {
+	return this->contents;
+}
+
 void StringResource::release() {
 	if (!this->contents)
 		return;

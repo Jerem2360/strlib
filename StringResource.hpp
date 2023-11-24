@@ -20,6 +20,7 @@ public:
 	void release();
 	size_t getSize();
 	int16_t getChar(size_t index);
+	const char* buffer();
 	operator bool();
 };
 

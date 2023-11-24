@@ -111,17 +111,16 @@ bool StringResourceList::doesResourceExist(resource_t index) {
 	return 1;
 }
 
-
-resource_t StringResourceList::bind(size_t hash) {
+resource_t StringResourceList::find(hash_t hash) {
 	resource_t res = this->searchForResource(hash);
 	if (res >= 0) this->incref(res);
 	return res;
 }
 
 resource_t StringResourceList::bind(const char* str, size_t sz) {
-	size_t hash = computeHash(str, sz);
+	hash_t hash = computeHash(str, sz);
 	//std::cout << "Hash is " << hash << "\n";
-	resource_t res = this->bind(hash);
+	resource_t res = this->find(hash);
 	if (res < 0) {
 		//std::cout << "Not found, creating...\n";
 		res = this->createResource(str, sz);
@@ -188,5 +187,11 @@ bool StringResourceList::hash(resource_t index, hash_t* out) {
 		return 0;
 	*out = this->resources[index].hash();
 	return 1;
+}
+
+const char* StringResourceList::buffer(resource_t index) {
+	if (!this->doesResourceExist(index))
+		return nullptr;
+	return this->resources[index].buffer();
 }
 

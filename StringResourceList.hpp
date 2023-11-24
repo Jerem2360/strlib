@@ -44,18 +44,19 @@ public:
 	static StringResourceList& get();
 
 	/*
+	Searches for a resource with the specified hash and
+	returns the index that uniquely identifies it.
+	Returns -1 if the resource is not found.
+	Note: this function does perform a binding operation.
+	*/
+	resource_t find(hash_t hash);
+	/*
 	Tries to bind to an existing string resource.
 	If the resource is not found, create a new resource
 	and bind to it.
 	Returns an index that uniquely identifies the resource.
 	*/
 	resource_t bind(const char* str, size_t sz);
-	/*
-	Tries to bind to an existing string resource given its hash.
-	If the resource is not found, return -1.
-	Returns an index that uniquely identifies the resource if found.
-	*/
-	resource_t bind(size_t hash);
 	/*
 	Binds to the resource identified by index.
 	Returns index on success, -1 otherwise.
@@ -98,6 +99,11 @@ public:
 	Returns 1 on success, 0 otherwise.
 	*/
 	bool hash(resource_t index, hash_t* out);
+	/*
+	Returns the readonly buffer of the resource uniquely identified
+	by index. Returns nullptr is the resource is not found.
+	*/
+	const char* buffer(resource_t index);
 
 	StringResourceList(const StringResourceList&) = delete;
 	StringResourceList& operator =(const StringResourceList&) = delete;
